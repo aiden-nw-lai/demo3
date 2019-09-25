@@ -11,7 +11,7 @@ node {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
 
-        app = docker.build("aiden-nw-lai/demo3")
+        app = docker.build("aidenlai/demo3")
     }
 
     stage('Test image') {
@@ -28,9 +28,10 @@ node {
          * First, the incremental build number from Jenkins
          * Second, the 'latest' tag.
          * Pushing multiple tags is cheap, as all the layers are reused. */
-        docker.withRegistry('https://github.com', 'github-aiden') {
+        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub') {
             app.push("${env.BUILD_NUMBER}")
             app.push("latest")
         }
+        echo "Trying to Push Docker Build to DockerHub"
     }
 }
